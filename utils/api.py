@@ -43,12 +43,11 @@ class AnimeMusicAPI:
 
         login = self.session.post(self.endpoints["login"], json=data)
 
-        if login.status_code == 429:
-            if login.text.startswith("Too many requests"):
-                retry_in = float(login.text.split("please wait ")[1].split(" ")[0])
-                print(f'"Too many requests" detected, retry in {retry_in} seconds')
-                time.sleep(ceil(retry_in))
-                self.login()
+        if login.status_code == 429 and login.text.startswith("Too many requests"):
+            retry_in = float(login.text.split("please wait ")[1].split(" ")[0])
+            print(f'"Too many requests" detected, retry in {retry_in} seconds')
+            time.sleep(ceil(retry_in))
+            self.login()
 
         return login
 

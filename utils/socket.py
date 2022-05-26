@@ -45,5 +45,5 @@ class Socket:
     def ws_receive_message(ws, message):
         ws.send("2")
 
-        if not message == "3":
+        if message != "3":
             print(message)
